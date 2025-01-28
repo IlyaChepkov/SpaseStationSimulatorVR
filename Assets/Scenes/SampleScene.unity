@@ -140,7 +140,7 @@ MonoBehaviour:
   _localAxis: 1
   _startValue: 0
   _constraints: {x: 100, y: 0}
-  posConstrains: 5
+  posConstrains: 1.25
 --- !u!136 &22720816
 CapsuleCollider:
   m_ObjectHideFlags: 0

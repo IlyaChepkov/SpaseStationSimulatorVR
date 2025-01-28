@@ -23,7 +23,6 @@ public class RotateObjectController : MonoBehaviour
     IXRInteractor _interactor;
     Vector3? startMove;
     private Quaternion startRoration;
-    float nowPosition = 0;
     int counter;
     bool rotate = true;
 
@@ -38,8 +37,8 @@ public class RotateObjectController : MonoBehaviour
         { 
             if (startMove is null)
                 startMove = _interactor.transform.TransformPoint(_interactor.transform.parent.position);
-            MoveLever((_interactor.transform.position - startMove) ?? throw new System.Exception());
-            startMove = _interactor.transform.TransformPoint(_interactor.transform.parent.position);
+            transform.rotation = startRoration;
+            MoveLever((_interactor.transform.TransformPoint(_interactor.transform.parent.position) - startMove) ?? throw new System.Exception());
         }
     }
 
@@ -60,12 +59,11 @@ public class RotateObjectController : MonoBehaviour
 
     public void MoveLever(Vector3 worldPosition)
     {
-        float value = worldPosition.x / posConstrains;
-        if (value < 0) value = 0;
-        if (value > 1) value = 1;
-        Debug.Log(_constraints.x * value - nowPosition);
-        transform.Rotate(_constraints.x * value - _constraints.x * nowPosition, 0, 0, Space.World);
-        nowPosition = value;
+        float value = worldPosition.y / posConstrains;
+        if (value > 0) value = 0;
+        if (value < -1) value = -1;
+        Debug.Log(_constraints.x * value);
+        transform.Rotate(-_constraints.x * value, 0, 0, Space.World);
     }
 }
 
